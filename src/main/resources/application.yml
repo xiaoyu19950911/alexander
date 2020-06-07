@@ -1,0 +1,48 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+  output:
+    ansi:
+      enabled: detect #终端彩色输出
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB #设置单个文件上传最大限制
+      max-request-size: 100MB #设置单次请求上传最大限制
+  jackson:
+    time-zone: GMT+8 #设置request和response标准时间
+    date-format: yyyy-MM-dd HH:mm:ss #设置时间格式
+
+swagger:
+  title: alexander
+  description: 亚历山大项目
+  version: 1.0
+  license: Apache License, Version 2.0
+  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+  terms-of-service-url: https://github.com/xiaoyu19950911/alexander
+  contact:
+    name: xyu
+    email: 1015407731@qq.com
+  base-package: com.monomer
+
+
+# JWT
+jwt:
+  header: Authorization
+  secret: maoyaoSecret
+  expiration: 604800 #6048000000 #7天
+  refresh:
+    expiration: 6048000 #70天
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      path: gettoken
+      refresh: refresh
+      register: register
+      logout: logout
