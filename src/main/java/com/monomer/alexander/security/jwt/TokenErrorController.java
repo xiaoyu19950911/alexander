@@ -36,15 +36,16 @@ public class TokenErrorController extends BasicErrorController {
                 isIncludeStackTrace(request, MediaType.ALL));
         String exception= (String) request.getAttribute("exception");
         HttpStatus status = getStatus(request);
-        //HttpStatus status=HttpStatus.OK;
-        /*if (!Strings.isNullOrEmpty((String)body.get("exception")) && body.get("exception").equals("invalidToken")){
-            body.put("status", HttpStatus.FORBIDDEN.value());
-            status = HttpStatus.FORBIDDEN;
-        }*/
         if ("invalidToken".equals(exception)){
             body=new HashMap<>();
             body.put("code","101");
             body.put("msg","请重新登陆！");
+            status= HttpStatus.OK;
+        }
+        if ("noPermissions".equals(exception)){
+            body=new HashMap<>();
+            body.put("code","101");
+            body.put("msg","权限不足！");
             status= HttpStatus.OK;
         }
         return new ResponseEntity<>(body, status);

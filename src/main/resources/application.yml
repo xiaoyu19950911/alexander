@@ -10,7 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   servlet:
     multipart:
       max-file-size: 10MB #设置单个文件上传最大限制
@@ -18,6 +18,10 @@ spring:
   jackson:
     time-zone: GMT+8 #设置request和response标准时间
     date-format: yyyy-MM-dd HH:mm:ss #设置时间格式
+
+logging:
+  level:
+    com.monomer.alexander: debug
 
 swagger:
   title: alexander
@@ -30,6 +34,8 @@ swagger:
     name: xyu
     email: 1015407731@qq.com
   base-package: com.monomer
+  authorization:
+    key-name: Authorization
 
 
 # JWT

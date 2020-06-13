@@ -11,7 +11,7 @@ import com.monomer.alexander.enums.ResultEnums;
  */
 public class ResultUtils {
 
-    public static Result<Object> success(Object obj){
+    public static Result success(Object obj){
         Result<Object> result= new Result<>();
         result.setCode(ResultEnums.SUCCESS.getCode());
         result.setMsg(ResultEnums.SUCCESS.getMsg());
@@ -19,18 +19,18 @@ public class ResultUtils {
         return result;
     }
 
-    public static Result<Object> success(){
+    public static Result success(){
         return success(null);
     }
 
-    public static Result<String> error(Integer code,String msg){
+    public static Result error(Integer code,String msg){
         Result<String> result=new Result<>();
         result.setCode(code);
         result.setMsg(msg);
         return result;
     }
 
-    public static Result<String> error(ResultEnums resultEnums){
+    public static Result error(ResultEnums resultEnums){
         Result<String> result=new Result<>();
         result.setCode(resultEnums.getCode());
         result.setMsg(resultEnums.getMsg());

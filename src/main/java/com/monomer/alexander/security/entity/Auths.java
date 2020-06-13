@@ -12,6 +12,7 @@ import javax.persistence.*;
  * @Date: 2020-06-07 15:46
  * @Version: 1.0
  **/
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
@@ -24,9 +25,12 @@ public class Auths extends BaseEntity {
     @Column(columnDefinition = "varchar(255) COMMENT'密码凭证'")
     private String credential;
 
-    @Column(columnDefinition = "varchar(255) COMMENT'登录方式'")
-    private String identityType;
+    @Column(columnDefinition = "int(11) COMMENT'账号状态'")
+    private Integer status;
 
     @Column(columnDefinition = "int(11) COMMENT'用户id'")
     private Integer userId;
+
+    @Column(columnDefinition = "varchar(255) COMMENT'token'")
+    private String token;
 }

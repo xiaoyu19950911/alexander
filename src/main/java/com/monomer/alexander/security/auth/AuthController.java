@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -33,18 +34,16 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @GetMapping(value = "/test")
-    @ApiOperation("test")
-    @ResponseBody
-    public Result<Object> createAuthenticationToken() throws Exception {
-        return ResultUtils.success("test");
-    }
-
     @PostMapping(value = "/getToken")
     @ApiOperation("登陆并获取token")
     @ResponseBody
     public Result<LoginResponse> createAuthenticationToken(@Valid @RequestBody JwtAuthenticationRequest authenticationRequest, BindingResult bindingResult) throws Exception {
         return authService.login(authenticationRequest);
+    }
+
+    public static void main(String[] args) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("123456"));
     }
 
     @ApiOperation("退出并更新token")

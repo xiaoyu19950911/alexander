@@ -23,9 +23,9 @@ public enum ResultEnums {
     OLDER_PASSWORD_ERROR(111,"原密码错误请重新输入！")
     ;
 
-    private Integer code;
+    private final Integer code;
 
-    private String msg;
+    private final String msg;
 
     public Integer getCode() {
         return code;

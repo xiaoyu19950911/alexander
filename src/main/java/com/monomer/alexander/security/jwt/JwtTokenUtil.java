@@ -23,16 +23,13 @@ public class JwtTokenUtil {
     private static final String CLAIM_KEY_USERID = "id";
 
 
-    @Value("${jwt.secret}")
-    private String secret;
+    private static final String secret = "AlexanderSecret";
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
+    private static final Long expiration = 604800L;//7天
 
-    @Value("${jwt.refresh.expiration}")
-    private Long refreshExpiration;
+    private static final Long refreshExpiration = 6048000L;//70天
 
-    public String getUsernameFromToken(String token) {
+    public static String getUsernameFromToken(String token) {
         String username;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -44,7 +41,7 @@ public class JwtTokenUtil {
         return username;
     }
 
-    public String getTokenTypeFromToken(String token){
+    public static String getTokenTypeFromToken(String token){
         String tokenType;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -56,7 +53,7 @@ public class JwtTokenUtil {
         return tokenType;
     }
 
-    public Integer getUserIdFromToken(String token) {
+    public static Integer getUserIdFromToken(String token) {
         String userId;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -90,7 +87,7 @@ public class JwtTokenUtil {
         return expiration;
     }
 
-    private Claims getClaimsFromToken(String token) {
+    private static Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
@@ -103,7 +100,7 @@ public class JwtTokenUtil {
         return claims;
     }
 
-    private Date generateExpirationDate() {
+    private static Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
 
@@ -123,7 +120,7 @@ public class JwtTokenUtil {
         return generateToken(claims);
     }*/
 
-    public String generateToken(JwtUser jwtUser) {
+    public static String generateToken(JwtUser jwtUser) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("tokenType", "token");
         claims.put(CLAIM_KEY_USERNAME, jwtUser.getUsername());
@@ -132,7 +129,7 @@ public class JwtTokenUtil {
         return generateToken(claims);
     }
 
-    public String generateRefreshToken(JwtUser jwtUser){
+    public static String generateRefreshToken(JwtUser jwtUser){
         Map<String, Object> claims = new HashMap<>();
         claims.put("tokenType", "refreshToken");
         claims.put(CLAIM_KEY_USERNAME, jwtUser.getUsername());
@@ -153,7 +150,7 @@ public class JwtTokenUtil {
         return refreshedToken;
     }
 
-    String generateRefreshToken(Map<String, Object> claims){
+    static String generateRefreshToken(Map<String, Object> claims){
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + refreshExpiration * 1000))
@@ -161,7 +158,7 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    String generateToken(Map<String, Object> claims) {
+    static String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())

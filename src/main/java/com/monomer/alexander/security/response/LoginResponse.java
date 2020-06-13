@@ -18,9 +18,6 @@ import java.util.List;
 @Builder
 public class LoginResponse {
 
-    @ApiModelProperty("是否为第三方首次登陆")
-    private Boolean status;
-
     @ApiModelProperty("token")
     private String token;
 
@@ -29,15 +26,6 @@ public class LoginResponse {
 
     @ApiModelProperty("用户id")
     private Integer userId;
-
-    @ApiModelProperty("第三方token")
-    private String accessToken;
-
-    @ApiModelProperty("微吼账户id")
-    private Integer weiHouUserId;
-
-    @ApiModelProperty("用户昵称")
-    private String nickName;
 
     @ApiModelProperty("用户角色")
     private List<String> roleNameList;

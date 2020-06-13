@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,14 +34,12 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public JwtUser loadUserByUsername(String identifier) throws UsernameNotFoundException {
-        List<Auths> authsList = authsRepository.findAllByIdentifierAndIdentityType(identifier,"1");
-        if (authsList == null || authsList.size() == 0)
+        Auths auths = authsRepository.findFirstByIdentifier(identifier);
+        if (auths == null)
             throw new UsernameNotFoundException(String.format("No user found with identifier '%s'.", identifier));
-        if (authsList.size()>1)
-            throw new SecurityException("该用户异常，请联系管理员");
-        Auths auths = authsList.get(0);
         log.debug("当前用户id为：{}",auths.getUserId());
-        List<Role> roleList = userRoleRelationRepository.findAllByUserId(auths.getUserId()).stream().map(userRoleRelation -> roleRepository.getOne(userRoleRelation.getRoleId())).collect(Collectors.toList());
+
+        List<Role> roleList = userRoleRelationRepository.findAllByUserId(auths.getUserId()).stream().map(userRoleRelation -> roleRepository.findById(userRoleRelation.getRoleId()).get()).collect(Collectors.toList());
         return JwtUserFactory.create(auths,roleList);
     }
 }

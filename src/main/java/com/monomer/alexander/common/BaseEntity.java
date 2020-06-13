@@ -11,8 +11,9 @@ import java.util.Date;
  * @Date: 2020-06-07 16:26
  * @Version: 1.0
  **/
-@Entity
+
 @Data
+@MappedSuperclass
 public abstract class BaseEntity {
 
     @Id
